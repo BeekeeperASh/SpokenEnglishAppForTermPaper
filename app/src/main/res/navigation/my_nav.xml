@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_test1"
+        android:name="com.example.spokenenglishappfortermpaper.FirstFragment"
+        android:label="fragment_first"
+        tools:layout="@layout/fragment_first" >
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/nav_test2"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_test2"
+        android:name="com.example.spokenenglishappfortermpaper.SecondFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_second" >
+        <action
+            android:id="@+id/action_secondFragment_to_firstFragment"
+            app:destination="@id/nav_test1"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="test"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.spokenenglishappfortermpaper.ExercisesFragment"
+        android:label="Exercises"
+        tools:layout="@layout/fragment_exercises_list" />
+    <fragment
+        android:id="@+id/nav_custom"
+        android:name="com.example.spokenenglishappfortermpaper.CustomLessonFragment"
+        android:label="Custom Lesson"
+        tools:layout="@layout/fragment_custom_lesson" />
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.spokenenglishappfortermpaper.ui.login.LoginFragment"
+        android:label="LogIn"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_nav_login_to_nav_signup"
+            app:destination="@id/nav_signup" />
+        <action
+            android:id="@+id/action_nav_login_to_nav_account"
+            app:popUpTo="@id/nav_home"
+            app:destination="@id/nav_account" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_signup"
+        android:name="com.example.spokenenglishappfortermpaper.SignupFragment"
+        android:label="SignUp"
+        tools:layout="@layout/fragment_signup" >
+        <action
+            android:id="@+id/action_nav_signup_to_nav_account"
+            app:destination="@id/nav_account" />
+        <action
+            android:id="@+id/action_nav_signup_to_nav_login"
+            app:destination="@id/nav_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.example.spokenenglishappfortermpaper.AccountFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/nav_base"
+        android:name="com.example.spokenenglishappfortermpaper.FirebaseBaseFragment"
+        android:label="fragment_firebase_base"
+        tools:layout="@layout/fragment_firebase_base" />
+</navigation>

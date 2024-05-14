@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/container"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:paddingLeft="@dimen/fragment_horizontal_margin"
+android:paddingTop="@dimen/fragment_vertical_margin"
+android:paddingRight="@dimen/fragment_horizontal_margin"
+android:paddingBottom="@dimen/fragment_vertical_margin"
+android:gravity="center_horizontal"
+tools:context=".SignupFragment">
+
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textInputEmail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:errorEnabled="true">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+
+</com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textInputName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:counterEnabled="true"
+    app:counterMaxLength="30"
+    app:errorEnabled="true">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Name"
+        android:inputType="text"
+        android:maxLength="30" />
+
+</com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textInputPassword"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:errorEnabled="true"
+    app:passwordToggleEnabled="true">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+</com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textInputConfirmPassword"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:errorEnabled="true"
+    app:passwordToggleEnabled="true"
+
+    >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Confirm Password"
+        android:inputType="textPassword" />
+
+</com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ученик" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Преподаватель" />
+
+    </RadioGroup>
+
+
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/loginSignUpButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:text="Sign up"
+    app:layout_constraintBottom_toTopOf="@+id/toSignUpTextView"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent" />
+
+<TextView
+    android:id="@+id/toLoginTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:text="Tap to Login"
+    android:textSize="20sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent" />
+</LinearLayout>

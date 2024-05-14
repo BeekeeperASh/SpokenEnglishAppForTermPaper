@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "560786555250",
+    "firebase_url": "https://termpaperdatabase-default-rtdb.firebaseio.com",
+    "project_id": "termpaperdatabase",
+    "storage_bucket": "termpaperdatabase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560786555250:android:08c95ded2ce822dbda1deb",
+        "android_client_info": {
+          "package_name": "com.example.spokenenglishappfortermpaper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc0p0WaWVoTuBIgZdLV46K105MgOY8cvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
