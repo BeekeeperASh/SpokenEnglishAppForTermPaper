@@ -39,7 +39,15 @@
         android:id="@+id/nav_home"
         android:name="com.example.spokenenglishappfortermpaper.ExercisesFragment"
         android:label="Exercises"
-        tools:layout="@layout/fragment_exercises_list" />
+        tools:layout="@layout/fragment_exercises_list" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_text_exercise"
+            app:destination="@id/nav_text_exercise"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/nav_custom"
         android:name="com.example.spokenenglishappfortermpaper.CustomLessonFragment"
@@ -80,4 +88,21 @@
         android:name="com.example.spokenenglishappfortermpaper.FirebaseBaseFragment"
         android:label="fragment_firebase_base"
         tools:layout="@layout/fragment_firebase_base" />
+    <fragment
+        android:id="@+id/nav_text_exercise"
+        android:name="com.example.spokenenglishappfortermpaper.TextExerciseFragment"
+        android:label="Text Exercise"
+        tools:layout="@layout/fragment_text_exercise" >
+        <action
+            android:id="@+id/action_nav_text_exercise_to_nav_home"
+            app:destination="@id/nav_home"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_in_left" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="text" />
+    </fragment>
 </navigation>

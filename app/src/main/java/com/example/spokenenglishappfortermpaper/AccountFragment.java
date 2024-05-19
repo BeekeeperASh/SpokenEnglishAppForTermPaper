@@ -1,5 +1,10 @@
 package com.example.spokenenglishappfortermpaper;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.spokenenglishappfortermpaper.databinding.FragmentAccountBinding;
@@ -66,7 +72,31 @@ public class AccountFragment extends Fragment {
         binding.btnAddNewText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                writeNewTextInDB(binding.textInput.getText().toString());
+                writeNewTextInDB(binding.textInput.getText().toString(), binding.textTitle.getText().toString());
+            }
+        });
+
+        binding.btnPast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboardManager  = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = clipboardManager.getPrimaryClip();
+
+                if (clipData != null && clipData.getItemCount() > 0) {
+                    // Получение текстового элемента из буфера
+                    CharSequence text = clipData.getItemAt(0).getText();
+
+                    // Вставка текста в нужное место
+                    binding.textInput.setText(text);
+                }
+
+            }
+        });
+
+        binding.clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.textInput.setText("");
             }
         });
 
@@ -107,17 +137,19 @@ public class AccountFragment extends Fragment {
                         binding.tvTextInput.setVisibility(View.VISIBLE);
                         binding.btnAddNewText.setVisibility(View.VISIBLE);
                         binding.btnPast.setVisibility(View.VISIBLE);
+                        binding.clear.setVisibility(View.VISIBLE);
+                        binding.textTitle.setVisibility(View.VISIBLE);
                     }
                 }
             }
         });
     }
 
-    private void writeNewTextInDB(String text){
+    private void writeNewTextInDB(String text, String title){
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("message");
-        String uniqueKey = myRef.child("exercises").push().getKey(); // Generate a unique key
-        myRef.child("exercises").child(uniqueKey).setValue(text);
+//        String uniqueKey = myRef.child("exercises").push().getKey(); // Generate a unique key
+        myRef.child("exercises").child(title).setValue(text);
         Toast.makeText(getContext(), "Ваш текст успешно добавлен", Toast.LENGTH_SHORT).show();
     }
 

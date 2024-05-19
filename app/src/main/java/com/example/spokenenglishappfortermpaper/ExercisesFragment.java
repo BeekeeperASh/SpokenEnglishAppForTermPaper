@@ -3,6 +3,7 @@ package com.example.spokenenglishappfortermpaper;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,11 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.spokenenglishappfortermpaper.placeholder.PlaceholderContent;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A fragment representing a list of Items.
  */
 public class ExercisesFragment extends Fragment {
+
+    DatabaseReference databaseReference;
+
+    MyItemRecyclerViewAdapter adapter;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -64,8 +74,27 @@ public class ExercisesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            adapter = new MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS);
+            recyclerView.setAdapter(adapter);
         }
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("message");
+        databaseReference.child("exercises").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PlaceholderContent.ITEMS.clear();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    PlaceholderContent.addItem(new PlaceholderContent.PlaceholderItem("", dataSnapshot.getKey(), "details"));
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         return view;
     }
 }

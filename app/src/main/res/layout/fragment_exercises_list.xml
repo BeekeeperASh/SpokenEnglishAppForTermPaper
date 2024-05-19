@@ -10,4 +10,7 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ExercisesFragment"
+
+    android:transitionGroup="true"
+
     tools:listitem="@layout/fragment_exercises" />

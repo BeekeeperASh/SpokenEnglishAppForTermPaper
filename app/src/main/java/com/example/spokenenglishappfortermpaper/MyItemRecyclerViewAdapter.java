@@ -1,7 +1,9 @@
 package com.example.spokenenglishappfortermpaper;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
     }
 
@@ -43,20 +44,30 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mContentView;
         public PlaceholderItem mItem;
 
         public ViewHolder(FragmentExercisesBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
             mContentView = binding.content;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("title", mContentView.getText().toString());
+                    Navigation.findNavController(binding.getRoot()).navigate(R.id.action_nav_home_to_nav_text_exercise, bundle);
+                }
+            });
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+
+
     }
+
+
 }
