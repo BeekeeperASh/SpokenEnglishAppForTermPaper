@@ -10,9 +10,10 @@
     >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/aklogo_1"/>
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/baseline_account_circle_24"
+        />
 
     <TextView
         android:id="@+id/user_login"

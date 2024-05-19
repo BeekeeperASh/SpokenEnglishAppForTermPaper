@@ -22,6 +22,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
+<!--    app:layout_constraintVertical_bias="@integer/material_motion_duration_short_1"-->
+
     <TextView
         android:id="@+id/tv_username"
         android:layout_width="match_parent"
