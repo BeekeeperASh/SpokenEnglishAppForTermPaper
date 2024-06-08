@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,8 @@ public class TextExerciseFragment extends Fragment {
     private String mParam = "Nothing";
 
     private String mainText = "";
+
+    private TextToSpeech textToSpeech;
 
     public TextExerciseFragment() {
         // Required empty public constructor
@@ -124,6 +127,31 @@ public class TextExerciseFragment extends Fragment {
             }
         });
 
+        textToSpeech = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener(){
+            @Override
+            public void onInit(int i) {
+                if(i != TextToSpeech.ERROR){
+                    textToSpeech.setLanguage(Locale.UK);
+                }
+            }
+        });
+
+        binding.buttonUS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToSpeech.setLanguage(Locale.US);
+                textToSpeech.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
+
+        binding.buttonUK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToSpeech.setLanguage(Locale.UK);
+                textToSpeech.speak(mainText, TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
+
         binding.title.setText(mParam);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("message");
@@ -162,6 +190,15 @@ public class TextExerciseFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroyView() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroyView();
+    }
+
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.RECORD_AUDIO}, 1);
@@ -180,37 +217,21 @@ public class TextExerciseFragment extends Fragment {
     static int LevenshteinDistanceDP(String str1,
                                      String str2)
     {
-
-        // A 2-D matrix to store previously calculated
-        // answers of subproblems in order
-        // to obtain the final
-
         int[][] dp = new int[str1.length() + 1][str2.length() + 1];
 
         for (int i = 0; i <= str1.length(); i++)
         {
             for (int j = 0; j <= str2.length(); j++) {
 
-                // If str1 is empty, all characters of
-                // str2 are inserted into str1, which is of
-                // the only possible method of conversion
-                // with minimum operations.
                 if (i == 0) {
                     dp[i][j] = j;
                 }
 
-                // If str2 is empty, all characters of str1
-                // are removed, which is the only possible
-                //  method of conversion with minimum
-                //  operations.
                 else if (j == 0) {
                     dp[i][j] = i;
                 }
 
                 else {
-                    // find the minimum among three
-                    // operations below
-
 
                     dp[i][j] = minm_edits(dp[i - 1][j - 1]
                                     + NumOfReplacement(str1.charAt(i - 1),str2.charAt(j - 1)), // replace
@@ -225,17 +246,11 @@ public class TextExerciseFragment extends Fragment {
         return accuracy;
     }
 
-    // check for distinct characters
-    // in str1 and str2
 
     static int NumOfReplacement(char c1, char c2)
     {
         return c1 == c2 ? 0 : 1;
     }
-
-    // receives the count of different
-    // operations performed and returns the
-    // minimum value among them.
 
     static int minm_edits(int... nums)
     {

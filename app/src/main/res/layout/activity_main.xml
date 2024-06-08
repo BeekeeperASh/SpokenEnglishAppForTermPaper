@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             app:menu="@menu/nav_bottom_menu"
             android:layout_gravity="bottom"
-            android:background="@color/md_theme_primary"
+            android:background="@color/md_theme_surface"
             />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

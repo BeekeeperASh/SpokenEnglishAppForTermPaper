@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,13 @@ import com.example.spokenenglishappfortermpaper.databinding.FragmentCustomLesson
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class CustomLessonFragment extends Fragment {
 
     private SpeechRecognizer speechRecognizer;
+
+    private TextToSpeech textToSpeech;
     FragmentCustomLessonBinding binding;
 
     public CustomLessonFragment() {
@@ -48,13 +52,13 @@ public class CustomLessonFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentCustomLessonBinding.inflate(inflater, container, false);
 
-        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             checkPermission();
         }
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getContext());
         final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
 
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
@@ -111,6 +115,31 @@ public class CustomLessonFragment extends Fragment {
             }
         });
 
+        textToSpeech = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener(){
+            @Override
+            public void onInit(int i) {
+                if(i != TextToSpeech.ERROR){
+                    textToSpeech.setLanguage(Locale.UK);
+                }
+            }
+        });
+
+        binding.buttonUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToSpeech.setLanguage(Locale.US);
+                textToSpeech.speak(binding.customText.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
+
+        binding.buttonUk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToSpeech.setLanguage(Locale.UK);
+                textToSpeech.speak(binding.customText.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
+
         binding.micOff2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,14 +161,12 @@ public class CustomLessonFragment extends Fragment {
         binding.buttonPast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClipboardManager clipboardManager  = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipboardManager clipboardManager = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clipData = clipboardManager.getPrimaryClip();
 
                 if (clipData != null && clipData.getItemCount() > 0) {
-                    // Получение текстового элемента из буфера
                     CharSequence text = clipData.getItemAt(0).getText();
 
-                    // Вставка текста в нужное место
                     binding.customText.setText(text);
                 }
 
@@ -159,58 +186,36 @@ public class CustomLessonFragment extends Fragment {
 
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.RECORD_AUDIO}, 1);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1 && grantResults.length > 0 ){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Toast.makeText(getContext(),"Permission Granted",Toast.LENGTH_SHORT).show();
+        if (requestCode == 1 && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
         }
     }
 
     static int LevenshteinDistanceDP(String str1,
-                                     String str2)
-    {
-
-        // A 2-D matrix to store previously calculated
-        // answers of subproblems in order
-        // to obtain the final
-
+                                     String str2) {
         int[][] dp = new int[str1.length() + 1][str2.length() + 1];
 
-        for (int i = 0; i <= str1.length(); i++)
-        {
+        for (int i = 0; i <= str1.length(); i++) {
             for (int j = 0; j <= str2.length(); j++) {
-
-                // If str1 is empty, all characters of
-                // str2 are inserted into str1, which is of
-                // the only possible method of conversion
-                // with minimum operations.
                 if (i == 0) {
                     dp[i][j] = j;
                 }
-
-                // If str2 is empty, all characters of str1
-                // are removed, which is the only possible
-                //  method of conversion with minimum
-                //  operations.
                 else if (j == 0) {
                     dp[i][j] = i;
-                }
-
-                else {
-                    // find the minimum among three
-                    // operations below
-
+                } else {
 
                     dp[i][j] = minm_edits(dp[i - 1][j - 1]
-                                    + NumOfReplacement(str1.charAt(i - 1),str2.charAt(j - 1)), // replace
-                            dp[i - 1][j] + 1, // delete
-                            dp[i][j - 1] + 1); // insert
+                                    + NumOfReplacement(str1.charAt(i - 1), str2.charAt(j - 1)),
+                            dp[i - 1][j] + 1,
+                            dp[i][j - 1] + 1);
                 }
             }
         }
@@ -220,20 +225,11 @@ public class CustomLessonFragment extends Fragment {
         return accuracy;
     }
 
-    // check for distinct characters
-    // in str1 and str2
-
-    static int NumOfReplacement(char c1, char c2)
-    {
+    static int NumOfReplacement(char c1, char c2) {
         return c1 == c2 ? 0 : 1;
     }
 
-    // receives the count of different
-    // operations performed and returns the
-    // minimum value among them.
-
-    static int minm_edits(int... nums)
-    {
+    static int minm_edits(int... nums) {
 
         return Arrays.stream(nums).min().orElse(
                 Integer.MAX_VALUE);

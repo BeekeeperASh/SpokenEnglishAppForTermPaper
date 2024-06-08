@@ -85,9 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:backgroundTint="@color/md_theme_secondary"
-            android:text="Past"
-            app:layout_constraintStart_toStartOf="@+id/btn_add_new_text"
-            app:layout_constraintTop_toBottomOf="@+id/btn_add_new_text" />
+            android:text="Past"/>
 
         <Button
             android:id="@+id/button_clear"
@@ -95,10 +93,23 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:backgroundTint="@color/md_theme_secondary"
-            android:text="Clear"
-            app:layout_constraintEnd_toEndOf="@+id/btn_add_new_text"
-            app:layout_constraintStart_toEndOf="@+id/btn_past"
-            app:layout_constraintTop_toBottomOf="@+id/btn_add_new_text" />
+            android:text="Clear"/>
+
+        <Button
+            android:id="@+id/button_us"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/md_theme_secondary"
+            android:text="US" />
+
+        <Button
+            android:id="@+id/button_uk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/md_theme_secondary"
+            android:text="UK" />
 
     </LinearLayout>
 

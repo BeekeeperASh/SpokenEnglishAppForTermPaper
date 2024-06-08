@@ -88,10 +88,10 @@ public class SignupFragment extends Fragment {
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton radioButton = binding.getRoot().findViewById(checkedId);
             if (radioButton.getId() == R.id.radioButton1) {
-                Toast.makeText(getContext(), "Option 1 selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Option 1 selected", Toast.LENGTH_SHORT).show();
                 selectedOption = false;
             } else if (radioButton.getId() == R.id.radioButton2) {
-                Toast.makeText(getContext(), "Option 2 selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Option 2 selected", Toast.LENGTH_SHORT).show();
                 selectedOption = true;
             }
         });

@@ -11,25 +11,25 @@
         android:id="@+id/mic_off"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="32dp"
         android:src="@drawable/baseline_mic_off_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUS"
         app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
         android:id="@+id/mic_on"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/baseline_mic_24"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUK"
         app:layout_constraintVertical_bias="0.5" />
 
     <TextView
@@ -48,7 +48,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="360dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
@@ -93,6 +93,28 @@
         android:layout_height="200dp"
         android:background="@color/md_theme_surface"
         app:layout_constraintTop_toBottomOf="@+id/mic_off" />
+
+    <Button
+        android:id="@+id/buttonUS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="US"
+        app:layout_constraintEnd_toStartOf="@+id/buttonUK"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+    <Button
+        android:id="@+id/buttonUK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="UK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonUS"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
